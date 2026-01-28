@@ -6,16 +6,28 @@
 
     <link rel="stylesheet" href="/static/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/static/favicon.png" />
     <link rel="shortcut icon" href="/static/favicon.png" type="image/png">
 </head>
 <body>
 
+<!-- Top Header -->
+<header class="topbar">
+    <div class="brand">
+        📊 AI Worker Productivity Dashboard
+    </div>
+    <div class="subtitle">
+        Real-time Operational & Business Metrics
+    </div>
+</header>
+
 <div class="container">
 
     <!-- Filters -->
     <div class="filters">
-        <div>
+        <div class="filter-group">
             <label>Time Window</label>
             <select id="hours">
                 <option value="">All</option>
@@ -26,44 +38,44 @@
             </select>
         </div>
 
-        <div>
+        <div class="filter-group">
             <label>Worker</label>
             <select id="worker">
                 <option value="">All</option>
             </select>
         </div>        
-        <button id="refreshBtn">Refresh</button>
-        <button id="resetBtn" style="background:#dc2626">Reset Data</button>
-        <div id="filterInfo" style="margin-top:8px;color:#555;font-size:14px"></div>
 
+        <div class="filter-actions">
+            <button id="refreshBtn">Refresh</button>
+            <button id="resetBtn" class="danger">Reset Data</button>
+        </div>
+
+        <div id="filterInfo" class="filter-info"></div>
     </div>
 
-    <h1>📊 AI Worker Productivity Dashboard</h1>
-
     <!-- KPI Cards -->
-    <div class="kpi-grid">
+    <section class="kpi-grid">
         <div class="kpi-card"><h3>Total Events</h3><p id="total_events">0</p></div>
         <div class="kpi-card"><h3>Total Products</h3><p id="total_products">0</p></div>
         <div class="kpi-card"><h3>Active Events</h3><p id="active_events">0</p></div>
         <div class="kpi-card"><h3>Idle Events</h3><p id="idle_events">0</p></div>
 
-        <div class="kpi-card"><h3>Avg Utilization</h3><p id="kpi_utilization">-</p></div>
-        <div class="kpi-card"><h3>Production Rate</h3><p id="kpi_rate">-</p></div>
+        <div class="kpi-card accent"><h3>Avg Utilization</h3><p id="kpi_utilization">-</p></div>
+        <div class="kpi-card accent"><h3>Production Rate</h3><p id="kpi_rate">-</p></div>
         <div class="kpi-card"><h3>Total Active (min)</h3><p id="kpi_active">-</p></div>
         <div class="kpi-card"><h3>Total Idle (min)</h3><p id="kpi_idle">-</p></div>
 
         <!-- Business Metrics -->
-        <div class="kpi-card"><h3>Throughput (units/hr)</h3><p id="kpi_throughput">-</p></div>
+        <div class="kpi-card highlight"><h3>Throughput</h3><p id="kpi_throughput">-</p></div>
         <div class="kpi-card"><h3>Idle Ratio (%)</h3><p id="kpi_idle_ratio">-</p></div>
-        <div class="kpi-card"><h3>Yield (units/event)</h3><p id="kpi_yield">-</p></div>
-        <div class="kpi-card"><h3>Bottleneck Worker</h3><p id="kpi_bottleneck">-</p></div>
+        <div class="kpi-card"><h3>Yield</h3><p id="kpi_yield">-</p></div>
+        <div class="kpi-card"><h3>Bottleneck</h3><p id="kpi_bottleneck">-</p></div>
         <div class="kpi-card"><h3>MTBF (min)</h3><p id="kpi_mtbf">-</p></div>
         <div class="kpi-card"><h3>MTTR (min)</h3><p id="kpi_mttr">-</p></div>
-
-    </div>
+    </section>
 
     <!-- Charts -->
-    <div class="chart-grid">
+    <section class="chart-grid">
         <div class="chart-card">
             <h3>📈 Events Over Time</h3>
             <canvas id="eventsChart"></canvas>
@@ -73,6 +85,7 @@
             <h3>🏭 Worker Productivity</h3>
             <canvas id="workerChart"></canvas>
         </div>
+
         <div class="chart-card">
             <h3>📦 Products Over Time</h3>
             <canvas id="productChart"></canvas>
@@ -82,10 +95,10 @@
             <h3>⏱ Active vs Idle</h3>
             <canvas id="idlePie"></canvas>
         </div>        
-    </div>
+    </section>
 
     <!-- Tables -->
-    <h2>👷 Worker Metrics</h2>
+    <h2 class="section-title">👷 Worker Metrics</h2>
     <table id="workers_table">
         <thead>
             <tr>
@@ -98,7 +111,7 @@
         <tbody></tbody>
     </table>
 
-    <h2>🏢 Workstation Metrics</h2>
+    <h2 class="section-title">🏢 Workstation Metrics</h2>
     <table id="stations_table">
         <thead>
             <tr>
