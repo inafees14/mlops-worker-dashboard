@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>AI Worker Productivity Dashboard</title>
+
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Filters -->
+    <div class="filters">
+        <div>
+            <label>Time Window</label>
+            <select id="hours">
+                <option value="">All</option>
+                <option value="1">Last 1 Hour</option>
+                <option value="6">Last 6 Hours</option>
+                <option value="12">Last 12 Hours</option>
+                <option value="24">Last 24 Hours</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Worker</label>
+            <select id="worker">
+                <option value="">All</option>
+            </select>
+        </div>        
+        <button id="refreshBtn">Refresh</button>
+        <button id="resetBtn" style="background:#dc2626">Reset Data</button>
+        <div id="filterInfo" style="margin-top:8px;color:#555;font-size:14px"></div>
+
+    </div>
+
+    <h1>📊 AI Worker Productivity Dashboard</h1>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+        <div class="kpi-card"><h3>Total Events</h3><p id="total_events">0</p></div>
+        <div class="kpi-card"><h3>Total Products</h3><p id="total_products">0</p></div>
+        <div class="kpi-card"><h3>Active Events</h3><p id="active_events">0</p></div>
+        <div class="kpi-card"><h3>Idle Events</h3><p id="idle_events">0</p></div>
+
+        <div class="kpi-card"><h3>Avg Utilization</h3><p id="kpi_utilization">-</p></div>
+        <div class="kpi-card"><h3>Production Rate</h3><p id="kpi_rate">-</p></div>
+        <div class="kpi-card"><h3>Total Active (min)</h3><p id="kpi_active">-</p></div>
+        <div class="kpi-card"><h3>Total Idle (min)</h3><p id="kpi_idle">-</p></div>
+
+        <!-- Business Metrics -->
+        <div class="kpi-card"><h3>Throughput (units/hr)</h3><p id="kpi_throughput">-</p></div>
+        <div class="kpi-card"><h3>Idle Ratio (%)</h3><p id="kpi_idle_ratio">-</p></div>
+        <div class="kpi-card"><h3>Yield (units/event)</h3><p id="kpi_yield">-</p></div>
+        <div class="kpi-card"><h3>Bottleneck Worker</h3><p id="kpi_bottleneck">-</p></div>
+        <div class="kpi-card"><h3>MTBF (min)</h3><p id="kpi_mtbf">-</p></div>
+        <div class="kpi-card"><h3>MTTR (min)</h3><p id="kpi_mttr">-</p></div>
+
+    </div>
+
+    <!-- Charts -->
+    <div class="chart-grid">
+        <div class="chart-card">
+            <h3>📈 Events Over Time</h3>
+            <canvas id="eventsChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>🏭 Worker Productivity</h3>
+            <canvas id="workerChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3>📦 Products Over Time</h3>
+            <canvas id="productChart"></canvas>
+        </div>
+        
+        <div class="chart-card">
+            <h3>⏱ Active vs Idle</h3>
+            <canvas id="idlePie"></canvas>
+        </div>        
+    </div>
+
+    <!-- Tables -->
+    <h2>👷 Worker Metrics</h2>
+    <table id="workers_table">
+        <thead>
+            <tr>
+                <th>Worker</th>
+                <th>Events</th>
+                <th>Products</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h2>🏢 Workstation Metrics</h2>
+    <table id="stations_table">
+        <thead>
+            <tr>
+                <th>Station</th>
+                <th>Events</th>
+                <th>Products</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
