@@ -78,16 +78,21 @@ def seed_database(db: Session, rows: int = 300):
     db.commit()
 
 
+from sqlalchemy.orm import Session
 from app.core.database import SessionLocal
 from app.models.event import Event
 
 def seed_if_empty():
-    db = SessionLocal()
+    db: Session = SessionLocal()
     try:
         count = db.query(Event).count()
         if count == 0:
-            print("🌱 Database empty — seeding initial dummy data...")
-            seed_database(db, rows=300)
+            print("Database empty — auto seeding...")
+            seed_dummy_data(db, rows=200)   # keep reasonable
+        else:
+            print("Database already seeded.")
+    except Exception as e:
+        print("Seed skipped:", e)
     finally:
         db.close()
 
