@@ -29,11 +29,17 @@ def compute_business_metrics(
     # ---------------- Business KPIs ----------------
 
     throughput = round(total_units / max(active_events, 1), 2)
+    # Production rate = units per hour (approx)
+    production_rate = round(total_units / max((hours or 1), 1), 2)
     idle_ratio = round((idle_events / max(total_events, 1)) * 100, 2)
     yield_rate = round(total_units / max(total_events, 1), 2)
     avg_utilization = round(100 - idle_ratio, 2)
 
     # ---------------- Operational Metrics ----------------
+    # Approximate minutes per event (simulation)
+    MINUTES_PER_EVENT = 2
+    total_active_minutes = active_events * MINUTES_PER_EVENT
+    total_idle_minutes = idle_events * MINUTES_PER_EVENT
 
     # MTBF / MTTR estimation (simple simulation logic)
     timestamps = (
@@ -77,6 +83,9 @@ def compute_business_metrics(
 
     return {
         "throughput_units_per_hour": throughput,
+        "production_rate": production_rate,
+        "total_active_minutes": total_active_minutes,
+        "total_idle_minutes": total_idle_minutes,
         "idle_ratio_percent": idle_ratio,
         "yield_units_per_event": yield_rate,
         "avg_utilization": avg_utilization,

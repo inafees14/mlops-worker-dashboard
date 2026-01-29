@@ -36,6 +36,14 @@ async function loadAnalytics() {
 
     document.getElementById("kpi_throughput").innerText =
         data.throughput_units_per_hour;
+    
+        document.getElementById("kpi_rate").innerText =
+        data.production_rate ?? "-";
+    document.getElementById("kpi_active").innerText =
+        data.total_active_minutes?.toFixed(1) ?? "-";
+
+    document.getElementById("kpi_idle").innerText =
+        data.total_idle_minutes?.toFixed(1) ?? "-";
 
     document.getElementById("kpi_idle_ratio").innerText =
         data.idle_ratio_percent + "%";
@@ -241,3 +249,7 @@ async function refreshDashboard() {
 document.getElementById("refreshBtn").onclick = refreshDashboard;
 refreshDashboard();
 setInterval(refreshDashboard, 5000);
+
+document.getElementById("lastUpdated").innerText =
+    "Last Updated: " + new Date().toLocaleString();
+

@@ -47,7 +47,6 @@ def timeseries(
 ):
     return get_timeseries(db, hours=hours, worker_id=worker_id)
 
-
 @router.get("/analytics")
 def analytics(
     hours: Optional[int] = Query(None),
