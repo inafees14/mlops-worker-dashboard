@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.event import Event
+from app.services.seeder import seed_database
 
 router = APIRouter(prefix="/api/admin", tags=["Admin"])
 
