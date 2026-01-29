@@ -126,5 +126,7 @@ This project demonstrates production-ready MLOps engineering skills including:
 ## Author
 
 Mohammad Nafees Iqbal
+
 M.Sc Data Science
+
 GitHub: https://github.com/inafees14
