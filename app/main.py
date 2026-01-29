@@ -21,6 +21,7 @@ def dashboard():
     return FileResponse("app/static/index.html")
 
 app.include_router(health.router)
+app.include_router(health.router, prefix="/api")
 app.include_router(seed.router)
 app.include_router(events.router)
 app.include_router(metrics.router)
