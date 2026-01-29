@@ -14,7 +14,7 @@ def compute_business_metrics(
     query = db.query(Event)
 
     if hours:
-        since = datetime.utcnow() - timedelta(hours=hours)
+        since = datetime.now() - timedelta(hours=hours)
         query = query.filter(Event.timestamp >= since)
 
     if worker_id:
