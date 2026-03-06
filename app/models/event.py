@@ -7,9 +7,9 @@ class Event(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     timestamp = Column(DateTime, index=True)
-    worker_id = Column(String)
-    workstation_id = Column(String)
-    event_type = Column(String)
+    worker_id = Column(String, index=True)
+    workstation_id = Column(String, index=True)
+    event_type = Column(String, index=True)
     confidence = Column(Float)
     count = Column(Integer, default=0)
     event_hash = Column(String, unique=True)

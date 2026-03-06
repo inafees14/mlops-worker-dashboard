@@ -6,3 +6,7 @@ local.db-shm
 local.db-wal
 .venv/
 .env/
+*.db
+*.sqlite3
+*.ipynb
+size.py

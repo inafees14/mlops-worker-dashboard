@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, case
 from app.models.event import Event
 from datetime import datetime, timedelta
 from typing import Optional
@@ -12,22 +12,21 @@ def get_summary_metrics(db: Session, hours: Optional[int] = None):
         cutoff = datetime.utcnow() - timedelta(hours=hours)
         query = query.filter(Event.timestamp >= cutoff)
 
-    total_events = query.count()
-    total_products = query.with_entities(func.sum(Event.count)).scalar() or 0
-
-    active_events = query.filter(Event.event_type == "working").count()
-    idle_events = query.filter(Event.event_type == "idle").count()
-
-    last_event_time = query.with_entities(func.max(Event.timestamp)).scalar()
+    metrics = query.with_entities(
+        func.count(Event.id).label("total_events"),
+        func.sum(Event.count).label("total_products"),
+        func.sum(case((Event.event_type == "working", 1), else_=0)).label("active_events"),
+        func.sum(case((Event.event_type == "idle", 1), else_=0)).label("idle_events"),
+        func.max(Event.timestamp).label("last_event_time"),
+    ).one()
 
     return {
-        "total_events": total_events,
-        "total_products": total_products,
-        "active_events": active_events,
-        "idle_events": idle_events,
-        "last_event_time": last_event_time,
+        "total_events": metrics.total_events or 0,
+        "total_products": metrics.total_products or 0,
+        "active_events": metrics.active_events or 0,
+        "idle_events": metrics.idle_events or 0,
+        "last_event_time": metrics.last_event_time,
     }
-
 
 
 def get_worker_metrics(
@@ -68,7 +67,6 @@ def get_worker_metrics(
     return results
 
 
-
 def get_workstation_metrics(db: Session, hours: Optional[int] = None):
     query = db.query(Event)
 
@@ -94,4 +92,3 @@ def get_workstation_metrics(db: Session, hours: Optional[int] = None):
         }
         for r in rows
     ]
-
